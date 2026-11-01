@@ -1,36 +1,36 @@
-# Mapes físics · Europa i Àsia (v1)
+# Physical maps · Europe and Asia (v1)
 
-Activitat interactiva per situar accidents geogràfics en un mapa mut. Cal arrossegar cada nom fins al seu punt del mapa:
+An interactive activity for placing geographical features on a blank map. Drag each name to its position on the map:
 
-- **Si encertes**, el nom desapareix de la safata i la zona o el riu es ressalta al mapa amb el color del grup i el nom.
-- **Si falles**, el nom torna al seu lloc i es compta un error.
+- **If you get it right**, the name disappears from the tray and the area or river is highlighted on the map in its group colour, together with its name.
+- **If you get it wrong**, the name returns to its place and an error is counted.
 
-Funciona en **ordinador i tauleta**. En un mòbil mostra un avís perquè la pantalla és massa petita per a l'activitat.
+It works on **computers and tablets**. On a mobile phone it shows a notice, as the screen is too small for the activity.
 
-## Estructura
+## Structure
 
 ```
-index.html          Pàgina única: inici (Europa | Àsia), activitat i avisos
-css/styles.css      Estils i colors dels grups (variables CSS al principi)
-js/app.js           Lògica: navegació (#/europa, #/asia), mapa SVG, arrossegar i deixar anar
-data/europa.js      Mapa mut + accidents d'Europa (generat)
-data/asia.js        Mapa mut + accidents d'Àsia (generat)
-tools/generate_maps.py   Script que genera data/*.js a partir de Natural Earth
+index.html          Single page: start screen (Europe | Asia), activity and notices
+css/styles.css      Styles and group colours (CSS variables at the top)
+js/app.js           Logic: navigation (#/europa, #/asia), SVG map, drag and drop
+data/europa.js      Blank map + features of Europe (generated)
+data/asia.js        Blank map + features of Asia (generated)
+tools/generate_maps.py   Script that generates data/*.js from Natural Earth
 ```
 
-És HTML, CSS i JavaScript sense dependències ni pas de compilació. L'arrossegament utilitza Pointer Events, que funcionen amb ratolí i amb pantalla tàctil.
+It is plain HTML, CSS and JavaScript with no dependencies or build step. Dragging uses Pointer Events, which work with both mouse and touchscreen.
 
-## Provar-ho en local
+## Running locally
 
-Obre `index.html` directament al navegador, o bé:
+Open `index.html` directly in the browser, or:
 
 ```bash
-npx serve .          # o: python3 -m http.server 8000
+npx serve .          # or: python3 -m http.server 8000
 ```
 
-## Canviar accidents o enquadrament
+## Changing features or map framing
 
-Els accidents de cada mapa (nom, grup, punt i posició de l'etiqueta) estan definits a `tools/generate_maps.py`, a les funcions `europa()` i `asia()`. Per regenerar les dades:
+The features of each map (name, group, point and label position) are defined in `tools/generate_maps.py`, in the `europa()` and `asia()` functions. To regenerate the data:
 
 ```bash
 git clone --depth 1 --filter=blob:none --sparse https://github.com/nvkelso/natural-earth-vector tools/natural-earth-vector
@@ -38,23 +38,23 @@ cd tools/natural-earth-vector && git sparse-checkout set --no-cone '/geojson/ne_
   '/geojson/ne_50m_lakes.geojson' '/geojson/ne_10m_rivers_lake_centerlines.geojson' \
   '/geojson/ne_10m_geography_regions_polys.geojson' '/geojson/ne_50m_geography_marine_polys.geojson' \
   '/geojson/ne_50m_admin_0_countries.geojson' && cd ../..
-python3 tools/generate_maps.py     # requereix numpy
+python3 tools/generate_maps.py     # requires numpy
 ```
 
-## Colors dels grups
+## Group colours
 
-| Grup | Color | Distintiu |
+| Group | Colour | Distinguishing mark |
 |---|---|---|
-| Rius | blau `#1E6FE0` | recorregut ressaltat |
-| Serralades | vermell `#C62828` | trama de triangles |
-| Mars | turquesa `#00A5B5` | vora de punts |
-| Penínsules | morat `#7B1FA2` | vora discontínua |
-| Illes | verd `#2E7D32` | |
-| Planes | groc `#D9A300` | |
-| Llacs | blau marí `#1A237E` | |
-| Deserts | taronja `#EF6C00` | |
-| Estrets | negre `#111111` | |
-| Golfs | rosa `#E8558A` | vora de punts |
-| Arxipèlegs | marró `#795548` | |
+| Rivers | blue `#1E6FE0` | highlighted course |
+| Mountain ranges | red `#C62828` | triangle pattern |
+| Seas | turquoise `#00A5B5` | dotted edge |
+| Peninsulas | purple `#7B1FA2` | dashed edge |
+| Islands | green `#2E7D32` | |
+| Plains | yellow `#D9A300` | |
+| Lakes | navy blue `#1A237E` | |
+| Deserts | orange `#EF6C00` | |
+| Straits | black `#111111` | |
+| Gulfs | pink `#E8558A` | dotted edge |
+| Archipelagos | brown `#795548` | |
 
-Dades cartogràfiques: [Natural Earth](https://www.naturalearthdata.com/) (domini públic).
+Cartographic data: [Natural Earth](https://www.naturalearthdata.com/) (public domain).
